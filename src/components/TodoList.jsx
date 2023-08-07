@@ -1,12 +1,6 @@
-import { useEffect, useState } from "react";
-import TodoAPI from "../api/todo";
 import Todo from "./Todo";
 
-const TodoList = () => {
-  const [todos, setTodos] = useState([]);
-  useEffect(() => {
-    TodoAPI.getTodos().then((res) => setTodos(res));
-  }, []);
+const TodoList = ({ todos }) => {
   return (
     <div>
       {todos?.map((todo) => (
