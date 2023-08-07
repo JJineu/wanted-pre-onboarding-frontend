@@ -22,6 +22,9 @@ const TodoAPI = {
   },
   updateTodo: async ({ id, todo, isCompleted }) => {
     try {
+      console.log("Update Todo - ID:", id);
+      console.log("Update Todo - Todo:", todo);
+      console.log("Update Todo - isCompleted:", isCompleted);
       const response = await API.put(`/todos/${id}`, {
         todo,
         isCompleted,

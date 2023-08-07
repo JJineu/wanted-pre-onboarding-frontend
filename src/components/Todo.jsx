@@ -9,7 +9,7 @@ export default function Todo({ todo, onToggle, onUpdate, onDelete }) {
   const handleToggle = async () => {
     const updateContent = {
       id,
-      content,
+      todo: content,
       isCompleted: !isCompleted,
     };
     TodoAPI.updateTodo(updateContent)
@@ -20,7 +20,7 @@ export default function Todo({ todo, onToggle, onUpdate, onDelete }) {
   const handleUpdate = async () => {
     const updateContent = {
       id,
-      content: editContent,
+      todo: editContent,
       isCompleted,
     };
     TodoAPI.updateTodo(updateContent)
@@ -52,13 +52,21 @@ export default function Todo({ todo, onToggle, onUpdate, onDelete }) {
             />
             <button
               data-testid="submit-button"
-              onClick={() => handleUpdate(editContent)}
+              onClick={(e) => {
+                e.preventDefault();
+                handleUpdate(editContent);
+                setEditMode(false);
+              }}
             >
               제출
             </button>
             <button
               data-testid="cancel-button"
-              onClick={() => setEditMode(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                setEditContent(content);
+                setEditMode(false);
+              }}
             >
               취소
             </button>
