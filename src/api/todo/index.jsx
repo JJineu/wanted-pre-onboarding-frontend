@@ -9,45 +9,35 @@ const TodoAPI = {
       throw error;
     }
   },
-  createTodo: async ({ id, todo, isCompleted, userId }) => {
+  createTodo: async ({ todo, isCompleted }) => {
     try {
       const response = await API.post("/todos", {
-        id,
         todo,
         isCompleted,
-        userId,
       });
-      console.log(response);
       return response.data;
     } catch (error) {
       throw error;
     }
   },
-  // updateTodo: async () => {
-  //   try {
-  //     const response = await API.post("/todos", {
-  //       id,
-  //       todo,
-  //       isCompleted,
-  //       userId,
-  //     });
-  //     return response.data;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // },
-  // deleteTodo: async () => {
-  //   try {
-  //     const response = await API.post("/todos", {
-  //       id,
-  //       todo,
-  //       isCompleted,
-  //       userId,
-  //     });
-  //     return response.data;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // },
+  updateTodo: async ({ id, todo, isCompleted }) => {
+    try {
+      const response = await API.put(`/todos/${id}`, {
+        todo,
+        isCompleted,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  deleteTodo: async ({ id }) => {
+    try {
+      const response = await API.delete(`/todos/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 export default TodoAPI;
