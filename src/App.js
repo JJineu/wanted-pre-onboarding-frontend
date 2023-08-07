@@ -3,16 +3,31 @@ import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import TodoPage from "./pages/TodoPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import AuthProvider from "./components/AuthProvider";
 import RequireAuth from "./hooks/requireAuth";
+import AuthProvider from "./hooks/AuthProvider";
+import NotRequireAuth from "./hooks/notRequireAuth";
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signin" element={<SignInPage />} />
+          <Route
+            path="/signup"
+            element={
+              <NotRequireAuth>
+                <SignUpPage />
+              </NotRequireAuth>
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              <NotRequireAuth>
+                <SignInPage />
+              </NotRequireAuth>
+            }
+          />
           <Route
             path="/todo"
             element={

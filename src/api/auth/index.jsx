@@ -7,6 +7,7 @@ const AuthAPI = {
         email,
         password,
       });
+      console.log(response)
       return response.data;
     } catch (error) {
       console.log(error);
@@ -19,6 +20,7 @@ const AuthAPI = {
         email,
         password,
       });
+      console.log(response)
       return response.data;
     } catch (error) {
       console.log(error);

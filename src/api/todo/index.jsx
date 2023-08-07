@@ -1,17 +1,53 @@
 import API from "..";
 
 const TodoAPI = {
-  postTodos: async () => {
+  getTodos: async () => {
     try {
-      return await API.post("/todos", {
-        id: 1,
-        todo: "과제하기",
-        isCompleted: false,
-        userId: 1,
-      }).then((res) => console.log(res));
+      const response = await API.get("/todos");
+      return response.data;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   },
+  createTodo: async ({ id, todo, isCompleted, userId }) => {
+    try {
+      const response = await API.post("/todos", {
+        id,
+        todo,
+        isCompleted,
+        userId,
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  // updateTodo: async () => {
+  //   try {
+  //     const response = await API.post("/todos", {
+  //       id,
+  //       todo,
+  //       isCompleted,
+  //       userId,
+  //     });
+  //     return response.data;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // },
+  // deleteTodo: async () => {
+  //   try {
+  //     const response = await API.post("/todos", {
+  //       id,
+  //       todo,
+  //       isCompleted,
+  //       userId,
+  //     });
+  //     return response.data;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // },
 };
 export default TodoAPI;
