@@ -3,7 +3,6 @@ import { useAuth } from "../hooks/AuthProvider";
 import TodoList from "../components/TodoList";
 import TodoAPI from "../api/todo";
 import { useEffect, useState } from "react";
-import { v4 } from "uuid";
 
 export default function TodoPage() {
   const navigate = useNavigate();
@@ -18,21 +17,40 @@ export default function TodoPage() {
   const handleAdd = async () => {
     try {
       const newTodo = {
-        id: v4(),
         todo: content,
         isCompleted: false,
-        userId: auth.user,
       };
-      await TodoAPI.createTodo(newTodo);
-      setTodos((prevTodos) => [...prevTodos, newTodo]);
+      const data = await TodoAPI.createTodo(newTodo);
       setContent("");
+      setTodos((prevTodos) => [...prevTodos, data]);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleToggle = ({ id, complete }) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, isCompleted: complete } : todo
+    );
+    setTodos(updatedTodos);
+  };
+
+  const handleUpdate = ({ id, editContent }) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, todo: editContent } : todo
+    );
+    setTodos(updatedTodos);
+  };
+
+  const handleDelete = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
   useEffect(() => {
-    TodoAPI.getTodos().then((res) => setTodos(res));
+    TodoAPI.getTodos()
+      .then((res) => setTodos(res))
+      .catch((error) => console.log(error));
   }, []);
 
   return (
@@ -46,7 +64,12 @@ export default function TodoPage() {
       <button data-testid="new-todo-add-button" onClick={handleAdd}>
         추가
       </button>
-      <TodoList todos={todos} />
+      <TodoList
+        todos={todos}
+        onToggle={handleToggle}
+        onUpdate={handleUpdate}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }
