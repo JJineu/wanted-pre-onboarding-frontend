@@ -2,14 +2,14 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 
-const RequireAuth = ({ children }) => {
+const NotRequireAuth = ({ children }) => {
   const auth = useAuth();
   const location = useLocation();
 
-  if (!auth.token)
-    return <Navigate to={"/signin"} state={{ from: location }} replace />;
+  if (auth.token)
+    return <Navigate to={"/todo"} state={{ from: location }} replace />;
 
   return children;
 };
 
-export default RequireAuth;
+export default NotRequireAuth;
