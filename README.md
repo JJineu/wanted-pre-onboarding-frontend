@@ -18,12 +18,11 @@
 [임시배포-github.io](https://github.com/JJineu)
 
 <br>
-
-[](https://github.com/JJineu/wanted-pre-onboarding-frontend/assets/96639305/f1f849d4-4040-4718-a14e-a980c2e0af66)
+<img width="600" src="https://github.com/JJineu/wanted-pre-onboarding-frontend/assets/96639305/bf2a7fbb-808c-4c2b-bf6e-8ca44673fd57">
 
 <br>
 
-[](https://github.com/JJineu/wanted-pre-onboarding-frontend/assets/96639305/e06181c0-2442-4958-af19-ca24b0a523e7)
+<img  width="600" src="https://github.com/JJineu/wanted-pre-onboarding-frontend/assets/96639305/d6dd7b65-48ef-4173-912b-7e5026bcf3b4">
 
 <br>
 
