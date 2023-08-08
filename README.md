@@ -15,6 +15,11 @@
 <br>
 
 ## 데모 영상 or 배포 링크
+[](https://github.com/JJineu/wanted-pre-onboarding-frontend/assets/96639305/f1f849d4-4040-4718-a14e-a980c2e0af66)
+
+<br>
+
+[](https://github.com/JJineu/wanted-pre-onboarding-frontend/assets/96639305/e06181c0-2442-4958-af19-ca24b0a523e7)
 
 <br>
 
