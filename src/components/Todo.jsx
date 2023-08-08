@@ -138,6 +138,7 @@ const Content = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  min-width: 250px;
 `;
 
 const EditMode = styled.div`
@@ -168,21 +169,20 @@ const NormalMode = styled.div`
 `;
 
 const TodoContent = styled.span`
-  flex-basis: 70%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
 const ButtonContainer = styled.div`
-  flex-basis: 20%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 `;
 
 const Button = styled.button`
-  padding: 8px 12px;
+  width: 40px;
+  padding: 8px;
   background-color: ${({ disabled }) => (disabled ? "#d1d1d1" : "#007bff")};
   color: #fff;
   border: none;

@@ -88,7 +88,7 @@ export default function TodoPage() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -100,13 +100,14 @@ const InputContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin: 20px 0;
+  min-width: 250px;
 `;
 const TodoListContainer = styled.div`
   width: 100%;
 `;
 
 const Input = styled.input`
-  flex: 1;
+  width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -114,6 +115,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
+  min-width: 60px;
   padding: 8px 16px;
   background-color: ${({ disabled }) => (disabled ? "#d1d1d1" : "#007bff")};
   color: #fff;
