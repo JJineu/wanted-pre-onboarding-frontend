@@ -1,7 +1,8 @@
 import API from "..";
+import { User } from "../../types/user";
 
 const AuthAPI = {
-  signIn: async ({ email, password }) => {
+  signIn: async ({ email, password }: User) => {
     try {
       const response = await API.post("/auth/signin", {
         email,
@@ -12,7 +13,7 @@ const AuthAPI = {
       throw error;
     }
   },
-  signUp: async ({ email, password }) => {
+  signUp: async ({ email, password }: User) => {
     try {
       const response = await API.post("/auth/signup", {
         email,

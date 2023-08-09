@@ -1,18 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../hooks/AuthProvider";
 import styled from "@emotion/styled";
+import { User, Error } from "../types/user";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const navigate = useNavigate();
   const auth = useAuth();
-  const [state, setState] = useState({
+  const [state, setState] = useState<User>({
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState<Error>({ email: "", password: "" });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setState({
       ...state,
@@ -20,8 +21,8 @@ export default function SignInPage() {
     });
   };
 
-  const isValidate = ({ email, password }) => {
-    let errors = {};
+  const isValidate = ({ email, password }: User) => {
+    let errors: Error = { email: "", password: "" };
     if (!email) {
       errors.email = "Email is required";
     } else if (!email.includes("@")) {
@@ -32,28 +33,28 @@ export default function SignInPage() {
     } else if (password.length < 8) {
       errors.password = "Password format is required (length >= 8)";
     }
-    setErrors(errors);
-
-    return Object.keys(errors).length === 0;
+    return errors;
   };
 
-  useEffect(() => {
-    isValidate(state);
-  }, [state]);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { email, password } = state;
 
     if (isValidate({ email, password })) {
       try {
-        await auth.signin({ email, password });
-        navigate("/todo", { replace: true });
+        await auth.signup({ email, password });
+        navigate("/signin");
       } catch (error) {
         console.log(error);
       }
     }
   };
+
+  useEffect(() => {
+    const newErrors = isValidate(state);
+    setErrors(newErrors);
+  }, [state]);
+
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
@@ -84,14 +85,17 @@ export default function SignInPage() {
           {errors.password && <ErrorText>{errors.password}</ErrorText>}
         </InputContainer>
         <Button
-          data-testid="signin-button"
+          data-testid="signup-button"
           onClick={handleSubmit}
-          disabled={Object.keys(errors).length > 0}
+          disabled={Object.keys(errors).some(
+            (key) => errors[key as keyof Error] !== ""
+          )}
         >
-          로그인
+          회원가입
         </Button>
-        <StyledLink to={"/signup"}>
-          <Button>회원가입 창으로</Button>
+
+        <StyledLink to={"/signin"}>
+          <Button>로그인 창으로</Button>
         </StyledLink>
       </Form>
     </Container>
@@ -128,10 +132,10 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  margin-bottom: 10px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-bottom: 10px;
 `;
 
 const ErrorText = styled.span`

@@ -1,14 +1,26 @@
 import { useState } from "react";
 import TodoAPI from "../api/todo";
 import styled from "@emotion/styled";
+import { Todo } from "../types/todo";
 
-export default function Todo({ todo, onToggle, onUpdate, onDelete }) {
-  const { id, todo: content, isCompleted, userId } = todo;
+type Props = {
+  todo: Todo;
+  onToggle: (params: { id: number; complete: boolean }) => void;
+  onUpdate: (params: { id: number; editContent: string }) => void;
+  onDelete: (id: number) => void;
+};
+export default function TodoItem({
+  todo,
+  onToggle,
+  onUpdate,
+  onDelete,
+}: Props) {
+  const { id, todo: content, isCompleted } = todo;
   const [editMode, setEditMode] = useState(false);
-  const [editContent, setEditContent] = useState(content);
+  const [editContent, setEditContent] = useState<string>(content);
 
   const handleToggle = async () => {
-    const updateContent = {
+    const updateContent: Todo = {
       id,
       todo: content,
       isCompleted: !isCompleted,
@@ -18,8 +30,8 @@ export default function Todo({ todo, onToggle, onUpdate, onDelete }) {
       .catch((err) => console.log(err));
   };
 
-  const handleUpdate = async () => {
-    const updateContent = {
+  const handleUpdate = async (editContent: string) => {
+    const updateContent: Todo = {
       id,
       todo: editContent,
       isCompleted,
@@ -50,6 +62,7 @@ export default function Todo({ todo, onToggle, onUpdate, onDelete }) {
         {editMode ? (
           <EditMode>
             <StyledInput
+              data-testid="modify-input"
               type="text"
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}

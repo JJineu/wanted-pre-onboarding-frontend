@@ -4,12 +4,13 @@ import TodoList from "../components/TodoList";
 import TodoAPI from "../api/todo";
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import { Todo } from "../types/todo";
 
 export default function TodoPage() {
   const navigate = useNavigate();
   const auth = useAuth();
   const [content, setContent] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   const handleSignOut = () => {
     auth.signout(() => navigate("/signin"));
@@ -29,21 +30,33 @@ export default function TodoPage() {
     }
   };
 
-  const handleToggle = ({ id, complete }) => {
+  const handleToggle = ({
+    id,
+    complete,
+  }: {
+    id: number;
+    complete: boolean;
+  }) => {
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, isCompleted: complete } : todo
     );
     setTodos(updatedTodos);
   };
 
-  const handleUpdate = ({ id, editContent }) => {
+  const handleUpdate = ({
+    id,
+    editContent,
+  }: {
+    id: number;
+    editContent: string;
+  }) => {
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, todo: editContent } : todo
     );
     setTodos(updatedTodos);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
   };
