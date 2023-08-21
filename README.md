@@ -14,9 +14,7 @@
 
 <br>
 
-## 데모 영상 or 배포 링크
-[임시배포-github.io](https://github.com/JJineu)
-
+## 데모 영상 or 배포 링
 <br>
 <img width="600" src="https://github.com/JJineu/wanted-pre-onboarding-frontend/assets/96639305/bf2a7fbb-808c-4c2b-bf6e-8ca44673fd57">
 
