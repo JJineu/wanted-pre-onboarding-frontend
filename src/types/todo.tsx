@@ -3,4 +3,3 @@ export type Todo = {
   todo: string;
   isCompleted: boolean;
 };
-
