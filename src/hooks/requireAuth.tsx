@@ -9,7 +9,7 @@ const RequireAuth = ({ children }: { children: React.ReactNode }) => {
   if (!auth.token)
     return <Navigate to={"/signin"} state={{ from: location }} replace />;
 
-  return children;
+  return <>{children}</>;
 };
 
 export default RequireAuth;

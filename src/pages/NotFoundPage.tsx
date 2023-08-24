@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
-export default function NotFoundPage() {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate("/signin");
-  }, [navigate]);
+const NotFoundPage = () => {
+  return (
+    <div>
+      <title>404</title>
+      <p>Page Not Found</p>
+    </div>
+  );
+};
 
-  return <div>Not Found</div>;
-}
+export default NotFoundPage;
