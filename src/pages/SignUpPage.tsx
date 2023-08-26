@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../hooks/AuthProvider";
-import styled from "@emotion/styled";
 import { User, Error } from "../types/user";
 
 export default function SignUpPage() {
@@ -56,11 +55,11 @@ export default function SignUpPage() {
   }, [state]);
 
   return (
-    <Container>
-      <Form onSubmit={handleSubmit}>
-        <InputContainer>
-          <Label htmlFor="email">Email</Label>
-          <Input
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
             data-testid="email-input"
             id="email"
             name="email"
@@ -69,11 +68,11 @@ export default function SignUpPage() {
             onChange={handleChange}
             autoComplete="username"
           />
-          {errors.email && <ErrorText>{errors.email}</ErrorText>}
-        </InputContainer>
-        <InputContainer>
-          <Label htmlFor="password">Password</Label>
-          <Input
+          {errors.email && <p>{errors.email}</p>}
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
             data-testid="password-input"
             id="password"
             name="password"
@@ -82,9 +81,9 @@ export default function SignUpPage() {
             onChange={handleChange}
             autoComplete="current-password"
           />
-          {errors.password && <ErrorText>{errors.password}</ErrorText>}
-        </InputContainer>
-        <Button
+          {errors.password && <p>{errors.password}</p>}
+        </div>
+        <button
           data-testid="signup-button"
           onClick={handleSubmit}
           disabled={Object.keys(errors).some(
@@ -92,73 +91,12 @@ export default function SignUpPage() {
           )}
         >
           회원가입
-        </Button>
+        </button>
 
-        <StyledLink to={"/signin"}>
-          <Button>로그인 창으로</Button>
-        </StyledLink>
-      </Form>
-    </Container>
+        <Link to={"/signin"}>
+          <button>로그인 창으로</button>
+        </Link>
+      </form>
+    </div>
   );
 }
-
-// Styled components
-const Container = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-`;
-
-const Label = styled.label`
-  font-weight: bold;
-`;
-
-const Input = styled.input`
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
-`;
-
-const ErrorText = styled.span`
-  color: red;
-  font-size: 12px;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 8px 16px;
-  background-color: ${({ disabled }) => (disabled ? "#d1d1d1" : "#007bff")};
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-  margin-top: 10px;
-  cursor: ${({ disabled }) => (disabled ? "" : "pointer")};
-  transition: background-color 0.3s;
-  &:hover {
-    background-color: ${({ disabled }) => (disabled ? "#d1d1d1" : "#0056b3")};
-  }
-`;
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: #fff;
-`;

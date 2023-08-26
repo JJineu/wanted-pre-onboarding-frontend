@@ -9,7 +9,7 @@ const NotRequireAuth = ({ children }: { children: React.ReactNode }) => {
   if (auth.token)
     return <Navigate to={"/todo"} state={{ from: location }} replace />;
 
-  return children;
+  return <>{children}</>;
 };
 
 export default NotRequireAuth;

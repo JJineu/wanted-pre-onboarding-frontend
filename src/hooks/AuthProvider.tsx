@@ -11,7 +11,13 @@ type AuthProviderProps = {
 };
 
 export const authContext = createContext<AuthProviderProps>(null!);
-export const useAuth = () => useContext(authContext);
+export const useAuth = () => {
+  const value = useContext(authContext);
+  if (value === undefined) {
+    throw new Error("useAuth should be used within authContextProvider");
+  }
+  return value;
+};
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState(localStorage.getItem("access_token"));
