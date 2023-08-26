@@ -13,32 +13,20 @@ const Router = () => {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route
-            path="/signup"
-            element={
-              <NotRequireAuth>
-                <SignUpPage />
-              </NotRequireAuth>
-            }
-          />
-          <Route
-            path="/signin"
-            element={
-              <NotRequireAuth>
-                <SignInPage />
-              </NotRequireAuth>
-            }
-          />
-          <Route
-            path="/todo"
-            element={
-              <RequireAuth>
+          <NotRequireAuth>
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/signin" element={<SignInPage />} />
+          </NotRequireAuth>
+          <RequireAuth>
+            <Route
+              path="/todo"
+              element={
                 <React.Suspense fallback={<>...</>}>
                   <TodoPage />
                 </React.Suspense>
-              </RequireAuth>
-            }
-          />
+              }
+            />
+          </RequireAuth>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AuthProvider>
