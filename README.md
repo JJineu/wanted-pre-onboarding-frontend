@@ -1,5 +1,23 @@
-## 김현진 
-[@JJinue](https://github.com/JJineu)
+# Todo Web
+
+회원 가입 및 로그인, Todo memo app을 만드는 페이지입니다. 
+
+🗓️ 진행 기간: 약 2일(2023.08.07 ~ 2023.08.08)
+
+💡 개발 인원 : 1인 [@김현진](https://github.com/JJineu)
+
+<br>
+
+※ 개발 과정은 Notion으로 정리했습니다.
+- [Notion](https://www.notion.so/ongoingjin/week-01-review-forward-9c89db9837484a73a929cb61a61d75ff)
+
+※ 개인 과제를 바탕으로 팀 과제를 진행했습니다. (2023.08.22 ~ 2023.08.25)
+- [팀 Domain](https://wanted-preonboarding-2team-todo-app.netlify.app/signin)
+- [팀 과제 Git](https://github.com/wanted-internship-team/pre-onboarding-12th-1-2)
+- [팀 Notion](https://www.notion.so/somtha/1-6b681c68de114f47b9b79e0a0ad0162e)
+
+
+<br>
 
 
 ## 프로젝트 실행방법
@@ -14,7 +32,7 @@
 
 <br>
 
-## 데모 영상 or 배포 링
+## 데모 영상
 <br>
 <img width="600" src="https://github.com/JJineu/wanted-pre-onboarding-frontend/assets/96639305/bf2a7fbb-808c-4c2b-bf6e-8ca44673fd57">
 
@@ -23,6 +41,77 @@
 <img  width="600" src="https://github.com/JJineu/wanted-pre-onboarding-frontend/assets/96639305/d6dd7b65-48ef-4173-912b-7e5026bcf3b4">
 
 <br>
+
+## Point 1. 로그인 관리 - useAuth hook 사용
+로그인 관련 로직을 페이지 라우팅 이전에 확인하고 처리하기 위해, Context API를 사용하여 관리했습니다.
+토큰 여부에 따른 리다이렉트, 로그인 함수 등을 하위 컴포넌트에서 사용하기 쉽도록 만들었습니다.
+```jsx
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
+  const [userId, setUserId] = useState(localStorage.getItem("USER.ID"));
+
+  const signup = ({ email, password }: User, callback?: () => void) => {
+    return AuthAPI.signUp({ email, password }).then(() => {
+      if (callback) callback();
+    });
+  };
+
+  const signin = ({ email, password }: User, callback?: () => void) => {
+    return AuthAPI.signIn({ email, password }).then((data) => {
+      setToken(data.access_token);
+      const id = email.split("@")[0];
+      setUserId(id);
+      localStorage.setItem("ACCESS_TOKEN", data.access_token);
+      localStorage.setItem("USER.ID", id);
+      if (callback) callback();
+    });
+  };
+
+  const signout = (callback?: () => void) => {
+    setToken("");
+    setUserId("");
+    localStorage.removeItem("ACCESS_TOKEN");
+    localStorage.removeItem("USER.ID");
+    if (callback) callback();
+  };
+
+  let value: AuthProviderProps = { token, userId, signin, signup, signout };
+  return <authContext.Provider value={value}>{children}</authContext.Provider>;
+};
+
+export default AuthProvider;
+```
+
+## Point 2. API 인스턴스 분리
+API 인스턴스를 생성하여, 로그인 로직과 todo 로직에 재사용하였습니다.
+또한 토큰에 관련된 부분(인증)을 분리하여, 추후 변경이 쉽도록(local starage 외의 다른 방식을 사용할 경우) 관리했습니다.
+```jsx
+const API = axios.create({
+  baseURL: BASE_URL
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("ACCESS_TOKEN");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const { response } = error;
+    if (response.status === 401) return Promise.reject(error);
+    if (response) alert(response.data.message);
+    return Promise.reject(error);
+  }
+);
+
+```
 
 
 ## 과제 상세 사항
